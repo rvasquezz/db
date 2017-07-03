@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 02-07-2017 a las 17:25:38
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 5.6.30
+-- Servidor: localhost
+-- Tiempo de generación: 03-07-2017 a las 11:30:41
+-- Versión del servidor: 5.7.18-0ubuntu0.16.04.1
+-- Versión de PHP: 5.6.30-12~ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -171,16 +171,15 @@ CREATE TABLE `usuarios` (
   `id_persona` bigint(20) NOT NULL,
   `login` char(32) COLLATE utf8_spanish_ci NOT NULL,
   `password` char(64) COLLATE utf8_spanish_ci NOT NULL,
-  `auth_key` varchar(32) COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(70) COLLATE utf8_spanish_ci NOT NULL
+  `auth_key` varchar(32) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `login`, `password`, `auth_key`, `email`) VALUES
-(1, 1, 'admin', '202cb962ac59075b964b07152d234b70', '', 'anrto_94_5@hotmail.com');
+INSERT INTO `usuarios` (`id_usuario`, `id_persona`, `login`, `password`, `auth_key`) VALUES
+(1, 1, 'anrto_94_5@hotmail.com', '202cb962ac59075b964b07152d234b70', '');
 
 -- --------------------------------------------------------
 
