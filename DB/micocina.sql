@@ -1,529 +1,547 @@
-CREATE DATABASE  IF NOT EXISTS `micocina` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `micocina`;
--- MySQL dump 10.13  Distrib 5.5.55, for debian-linux-gnu (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Host: localhost    Database: micocina
--- ------------------------------------------------------
--- Server version 5.5.55-0+deb8u1
+-- Servidor: localhost
+-- Tiempo de generación: 04-07-2017 a las 16:56:50
+-- Versión del servidor: 5.7.18-0ubuntu0.16.04.1
+-- Versión de PHP: 5.6.30-12~ubuntu16.04.1+deb.sury.org+1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Table structure for table `accion_grupo`
+-- Base de datos: `micocina`
 --
 
-DROP TABLE IF EXISTS `accion_grupo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `acciones`
+--
+
+CREATE TABLE `acciones` (
+  `id_accion` bigint(20) UNSIGNED NOT NULL,
+  `id_controlador` bigint(20) NOT NULL,
+  `descripcion` char(35) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `accion_grupo`
+--
+
 CREATE TABLE `accion_grupo` (
   `id_accion` bigint(20) NOT NULL,
   `id_controlador` bigint(20) NOT NULL,
-  `id_grupo` bigint(20) NOT NULL,
-  PRIMARY KEY (`id_accion`,`id_controlador`,`id_grupo`)
+  `id_grupo` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `accion_grupo`
+-- Estructura de tabla para la tabla `auth`
 --
 
-LOCK TABLES `accion_grupo` WRITE;
-/*!40000 ALTER TABLE `accion_grupo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `accion_grupo` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `auth` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `source` varchar(255) NOT NULL,
+  `source_id` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `acciones`
+-- Volcado de datos para la tabla `auth`
 --
 
-DROP TABLE IF EXISTS `acciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `acciones` (
-  `id_accion` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `id_controlador` bigint(20) NOT NULL,
-  `descripcion` char(35) COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`id_accion`),
-  UNIQUE KEY `id_accion` (`id_accion`),
-  UNIQUE KEY `id_controlador` (`id_controlador`,`descripcion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `auth` (`id`, `user_id`, `source`, `source_id`) VALUES
+(3, 3, 'facebook', '10209492862750836');
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `acciones`
+-- Estructura de tabla para la tabla `comentario`
 --
 
-LOCK TABLES `acciones` WRITE;
-/*!40000 ALTER TABLE `acciones` DISABLE KEYS */;
-/*!40000 ALTER TABLE `acciones` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `comentario`
---
-
-DROP TABLE IF EXISTS `comentario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comentario` (
-  `id_comentario` int(11) NOT NULL AUTO_INCREMENT,
+  `id_comentario` int(11) NOT NULL,
   `descripcion` varchar(250) NOT NULL,
-  `calificacion` varchar(10) NOT NULL,
-  PRIMARY KEY (`id_comentario`)
+  `calificacion` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `comentario`
+-- Estructura de tabla para la tabla `controlador`
 --
 
-LOCK TABLES `comentario` WRITE;
-/*!40000 ALTER TABLE `comentario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comentario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `controlador`
---
-
-DROP TABLE IF EXISTS `controlador`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `controlador` (
-  `id_controlador` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_controlador` bigint(20) UNSIGNED NOT NULL,
   `id_modulo` bigint(20) NOT NULL,
-  `descripcion` char(50) COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`id_controlador`),
-  UNIQUE KEY `id_controlador` (`id_controlador`),
-  UNIQUE KEY `id_modulo` (`id_modulo`,`descripcion`)
+  `descripcion` char(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `controlador`
+-- Estructura de tabla para la tabla `cuenta_bancaria`
 --
 
-LOCK TABLES `controlador` WRITE;
-/*!40000 ALTER TABLE `controlador` DISABLE KEYS */;
-/*!40000 ALTER TABLE `controlador` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `cuenta_bancaria`
---
-
-DROP TABLE IF EXISTS `cuenta_bancaria`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cuenta_bancaria` (
-  `id_cuenta_bancaria` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_cuenta_bancaria` bigint(20) UNSIGNED NOT NULL,
   `cuenta` varchar(50) NOT NULL,
-  `id_persona` int(11) NOT NULL,
-  UNIQUE KEY `id_cuenta_bancaria` (`id_cuenta_bancaria`)
+  `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `cuenta_bancaria`
+-- Estructura de tabla para la tabla `grupo`
 --
 
-LOCK TABLES `cuenta_bancaria` WRITE;
-/*!40000 ALTER TABLE `cuenta_bancaria` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cuenta_bancaria` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `grupo`
---
-
-DROP TABLE IF EXISTS `grupo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `grupo` (
-  `id_grupo` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_grupo` bigint(20) UNSIGNED NOT NULL,
   `nombre` char(25) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` char(255) COLLATE utf8_spanish_ci NOT NULL,
-  `administrador` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_grupo`),
-  UNIQUE KEY `id_grupo` (`id_grupo`),
-  UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `administrador` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Dumping data for table `grupo`
+-- Volcado de datos para la tabla `grupo`
 --
 
-LOCK TABLES `grupo` WRITE;
-/*!40000 ALTER TABLE `grupo` DISABLE KEYS */;
-INSERT INTO `grupo` VALUES (1,'admin','GRUPO ADMIN',1);
-/*!40000 ALTER TABLE `grupo` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `grupo` (`id_grupo`, `nombre`, `descripcion`, `administrador`) VALUES
+(1, 'admin', 'GRUPO ADMIN', 1);
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `mesa`
+-- Estructura de tabla para la tabla `mesa`
 --
 
-DROP TABLE IF EXISTS `mesa`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mesa` (
-  `id_mesa` int(11) NOT NULL AUTO_INCREMENT,
+  `id_mesa` int(11) NOT NULL,
   `cantidad` int(11) DEFAULT NULL,
   `puestos` int(11) DEFAULT NULL,
-  `id_persona` int(11) NOT NULL,
-  `disponible` varchar(4) NOT NULL,
-  PRIMARY KEY (`id_mesa`)
+  `id_usuario` int(11) NOT NULL,
+  `disponible` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `mesa`
+-- Estructura de tabla para la tabla `modalidad`
 --
 
-LOCK TABLES `mesa` WRITE;
-/*!40000 ALTER TABLE `mesa` DISABLE KEYS */;
-/*!40000 ALTER TABLE `mesa` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `modalidad`
---
-
-DROP TABLE IF EXISTS `modalidad`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `modalidad` (
-  `id_modalidad` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(20) NOT NULL,
-  PRIMARY KEY (`id_modalidad`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id_modalidad` int(11) NOT NULL,
+  `descripcion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `modalidad`
+-- Volcado de datos para la tabla `modalidad`
 --
 
-LOCK TABLES `modalidad` WRITE;
-/*!40000 ALTER TABLE `modalidad` DISABLE KEYS */;
-INSERT INTO `modalidad` VALUES (1,'llevar'),(2,'mesa'),(3,'mixto');
-/*!40000 ALTER TABLE `modalidad` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `modalidad` (`id_modalidad`, `descripcion`) VALUES
+(1, 'llevar'),
+(2, 'mesa'),
+(3, 'mixto');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `modulo`
+-- Estructura de tabla para la tabla `modulo`
 --
 
-DROP TABLE IF EXISTS `modulo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `modulo` (
-  `id_modulo` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `descripcion` char(50) COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`id_modulo`),
-  UNIQUE KEY `id_modulo` (`id_modulo`),
-  UNIQUE KEY `descripcion` (`descripcion`)
+  `id_modulo` bigint(20) UNSIGNED NOT NULL,
+  `descripcion` char(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `modulo`
+-- Estructura de tabla para la tabla `perfil`
 --
 
-LOCK TABLES `modulo` WRITE;
-/*!40000 ALTER TABLE `modulo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `modulo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `perfil`
---
-
-DROP TABLE IF EXISTS `perfil`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `perfil` (
-  `id_perfil` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `id_persona` int(11) NOT NULL,
+  `id_perfil` bigint(20) UNSIGNED NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   `slogan` varchar(250) NOT NULL,
   `foto` varchar(200) NOT NULL,
-  `id_comentario` int(11) DEFAULT NULL,
-  UNIQUE KEY `id_perfil` (`id_perfil`)
+  `id_comentario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `perfil`
+-- Estructura de tabla para la tabla `plato`
 --
 
-LOCK TABLES `perfil` WRITE;
-/*!40000 ALTER TABLE `perfil` DISABLE KEYS */;
-/*!40000 ALTER TABLE `perfil` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `persona`
---
-
-DROP TABLE IF EXISTS `persona`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `persona` (
-  `id_persona` bigint(20) NOT NULL,
-  `tlf1` char(20) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `tlf2` char(20) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `apellidos` char(60) COLLATE utf8_spanish_ci NOT NULL,
-  `fnacimiento` date DEFAULT NULL,
-  `nacionalidad` char(1) COLLATE utf8_spanish_ci DEFAULT 'V',
-  `nombres` char(60) COLLATE utf8_spanish_ci NOT NULL,
-  `sexo` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `id_persona_det` int(11) NOT NULL,
-  `fecha_create` date NOT NULL,
-  PRIMARY KEY (`id_persona`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `persona`
---
-
-LOCK TABLES `persona` WRITE;
-/*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (1,'','','ADMINISTRADOR','2017-06-01','V','SISTEMA','M',0,'0000-00-00');
-/*!40000 ALTER TABLE `persona` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `persona_det`
---
-
-DROP TABLE IF EXISTS `persona_det`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `persona_det` (
-  `id_persona_det` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tipo_persona` int(11) NOT NULL,
-  `id_cuenta_bancaria` int(11) DEFAULT NULL,
-  `id_ubicacion` int(11) NOT NULL,
-  `id_persona` int(11) NOT NULL,
-  `fecha_create` date NOT NULL,
-  `comentario` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_persona_det`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `persona_det`
---
-
-LOCK TABLES `persona_det` WRITE;
-/*!40000 ALTER TABLE `persona_det` DISABLE KEYS */;
-/*!40000 ALTER TABLE `persona_det` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `plato`
---
-
-DROP TABLE IF EXISTS `plato`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `plato` (
-  `id_plato` int(11) NOT NULL AUTO_INCREMENT,
+  `id_plato` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `descripcion` varchar(70) NOT NULL,
   `precio` int(11) NOT NULL,
-  `id_persona` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   `id_plato_det` int(11) NOT NULL,
   `activo` varchar(4) NOT NULL,
-  `fecha_create` date NOT NULL,
-  PRIMARY KEY (`id_plato`)
+  `fecha_create` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `plato`
+-- Estructura de tabla para la tabla `plato_det`
 --
 
-LOCK TABLES `plato` WRITE;
-/*!40000 ALTER TABLE `plato` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plato` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `plato_det`
---
-
-DROP TABLE IF EXISTS `plato_det`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `plato_det` (
-  `id_plato_det` int(11) NOT NULL AUTO_INCREMENT,
+  `id_plato_det` int(11) NOT NULL,
   `id_plato` int(11) NOT NULL,
   `disponibles` int(11) NOT NULL,
   `reservados` int(11) NOT NULL,
   `inicia` datetime NOT NULL,
   `limite` datetime NOT NULL,
   `temina` datetime NOT NULL,
-  `id_modalidad` int(11) NOT NULL,
-  PRIMARY KEY (`id_plato_det`)
+  `id_modalidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `plato_det`
+-- Estructura de tabla para la tabla `reserva`
 --
 
-LOCK TABLES `plato_det` WRITE;
-/*!40000 ALTER TABLE `plato_det` DISABLE KEYS */;
-/*!40000 ALTER TABLE `plato_det` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `reserva`
---
-
-DROP TABLE IF EXISTS `reserva`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reserva` (
-  `id_reserva` int(11) NOT NULL AUTO_INCREMENT,
-  `id_persona` int(11) NOT NULL,
+  `id_reserva` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   `id_modalidad` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `fecha_create` date NOT NULL,
-  `id_mesa` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_reserva`)
+  `id_mesa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `reserva`
+-- Estructura de tabla para la tabla `tipo_usuario`
 --
 
-LOCK TABLES `reserva` WRITE;
-/*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `tipo_usuario` (
+  `id_tipo_usuario` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `tipo_persona`
+-- Volcado de datos para la tabla `tipo_usuario`
 --
 
-DROP TABLE IF EXISTS `tipo_persona`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tipo_persona` (
-  `id_tipo_persona` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(50) DEFAULT NULL,
-  UNIQUE KEY `id_tipo_persona` (`id_tipo_persona`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `nombre`) VALUES
+(1, 'COCINERO'),
+(2, 'CLIENTE'),
+(3, 'MIXTO');
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `tipo_persona`
+-- Estructura de tabla para la tabla `ubicacion`
 --
 
-LOCK TABLES `tipo_persona` WRITE;
-/*!40000 ALTER TABLE `tipo_persona` DISABLE KEYS */;
-INSERT INTO `tipo_persona` VALUES (1,'COCINERO'),(2,'CLIENTE'),(3,'MIXTO');
-/*!40000 ALTER TABLE `tipo_persona` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ubicacion`
---
-
-DROP TABLE IF EXISTS `ubicacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ubicacion` (
-  `id_ubicacion` int(11) NOT NULL AUTO_INCREMENT,
+  `id_ubicacion` int(11) NOT NULL,
   `latitud` varchar(45) NOT NULL,
-  `longitud` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_ubicacion`)
+  `longitud` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `ubicacion`
+-- Estructura de tabla para la tabla `user`
 --
 
-LOCK TABLES `ubicacion` WRITE;
-/*!40000 ALTER TABLE `ubicacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ubicacion` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `auth_key` varchar(32) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `password_reset_token` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `status` smallint(6) NOT NULL DEFAULT '10',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  `tlf1` varchar(20) DEFAULT NULL,
+  `nombres` varchar(60) NOT NULL,
+  `apellidos` varchar(60) NOT NULL,
+  `nacionalidad` varchar(1) DEFAULT NULL,
+  `id_usuario_det` int(11) DEFAULT NULL,
+  `sexo` varchar(6) NOT NULL,
+  `fnacimiento` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `usuario_grupo`
+-- Volcado de datos para la tabla `user`
 --
 
-DROP TABLE IF EXISTS `usuario_grupo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `tlf1`, `nombres`, `apellidos`, `nacionalidad`, `id_usuario_det`, `sexo`, `fnacimiento`) VALUES
+(3, 'anrto_94_5@hotmail.com', 'n6uHoANKVq9JaAUp-bvtarfTP6Kv8OyF', '$2y$13$P0WoCrgP1sL0xTznCCyr7Ob6kYuj22OVBXEim3Gt9P6U/f/opQtfe', '6xWi6yfcTXI9QJvX5qQG8R_pjzg1Wvax_1499198848', 'anrto_94_5@hotmail.com', 10, 1499198848, 1499198848, NULL, 'Ray', 'Vasquez', NULL, NULL, 'male', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario_det`
+--
+
+CREATE TABLE `usuario_det` (
+  `id_usuario_det` int(11) NOT NULL,
+  `id_tipo_usuario` int(11) NOT NULL,
+  `id_cuenta_bancaria` int(11) DEFAULT NULL,
+  `id_ubicacion` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
+  `fecha_create` date NOT NULL,
+  `comentario` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario_grupo`
+--
+
 CREATE TABLE `usuario_grupo` (
   `id_grupo` bigint(20) NOT NULL,
-  `id_usuario` bigint(20) NOT NULL,
-  PRIMARY KEY (`id_grupo`,`id_usuario`)
+  `id_usuario` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usuario_grupo`
+-- Volcado de datos para la tabla `usuario_grupo`
 --
 
-LOCK TABLES `usuario_grupo` WRITE;
-/*!40000 ALTER TABLE `usuario_grupo` DISABLE KEYS */;
-INSERT INTO `usuario_grupo` VALUES (1,1);
-/*!40000 ALTER TABLE `usuario_grupo` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `usuario_grupo` (`id_grupo`, `id_usuario`) VALUES
+(1, 3);
 
 --
--- Table structure for table `usuarios`
+-- Índices para tablas volcadas
 --
 
-DROP TABLE IF EXISTS `usuarios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuarios` (
-  `id_usuario` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `id_persona` bigint(20) NOT NULL,
-  `login` char(32) COLLATE utf8_spanish_ci NOT NULL,
-  `password` char(64) COLLATE utf8_spanish_ci NOT NULL,
-  `auth_key` varchar(32) COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(70) COLLATE utf8_spanish_ci NOT NULL,
-  PRIMARY KEY (`id_usuario`),
-  UNIQUE KEY `id_usuario` (`id_usuario`),
-  UNIQUE KEY `cedula` (`id_persona`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Indices de la tabla `acciones`
+--
+ALTER TABLE `acciones`
+  ADD PRIMARY KEY (`id_accion`),
+  ADD UNIQUE KEY `id_accion` (`id_accion`),
+  ADD UNIQUE KEY `id_controlador` (`id_controlador`,`descripcion`);
 
 --
--- Dumping data for table `usuarios`
+-- Indices de la tabla `accion_grupo`
+--
+ALTER TABLE `accion_grupo`
+  ADD PRIMARY KEY (`id_accion`,`id_controlador`,`id_grupo`);
+
+--
+-- Indices de la tabla `auth`
+--
+ALTER TABLE `auth`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `source_id` (`source_id`);
+
+--
+-- Indices de la tabla `comentario`
+--
+ALTER TABLE `comentario`
+  ADD PRIMARY KEY (`id_comentario`);
+
+--
+-- Indices de la tabla `controlador`
+--
+ALTER TABLE `controlador`
+  ADD PRIMARY KEY (`id_controlador`),
+  ADD UNIQUE KEY `id_controlador` (`id_controlador`),
+  ADD UNIQUE KEY `id_modulo` (`id_modulo`,`descripcion`);
+
+--
+-- Indices de la tabla `cuenta_bancaria`
+--
+ALTER TABLE `cuenta_bancaria`
+  ADD UNIQUE KEY `id_cuenta_bancaria` (`id_cuenta_bancaria`);
+
+--
+-- Indices de la tabla `grupo`
+--
+ALTER TABLE `grupo`
+  ADD PRIMARY KEY (`id_grupo`),
+  ADD UNIQUE KEY `id_grupo` (`id_grupo`),
+  ADD UNIQUE KEY `nombre` (`nombre`);
+
+--
+-- Indices de la tabla `mesa`
+--
+ALTER TABLE `mesa`
+  ADD PRIMARY KEY (`id_mesa`);
+
+--
+-- Indices de la tabla `modalidad`
+--
+ALTER TABLE `modalidad`
+  ADD PRIMARY KEY (`id_modalidad`);
+
+--
+-- Indices de la tabla `modulo`
+--
+ALTER TABLE `modulo`
+  ADD PRIMARY KEY (`id_modulo`),
+  ADD UNIQUE KEY `id_modulo` (`id_modulo`),
+  ADD UNIQUE KEY `descripcion` (`descripcion`);
+
+--
+-- Indices de la tabla `perfil`
+--
+ALTER TABLE `perfil`
+  ADD UNIQUE KEY `id_perfil` (`id_perfil`);
+
+--
+-- Indices de la tabla `plato`
+--
+ALTER TABLE `plato`
+  ADD PRIMARY KEY (`id_plato`);
+
+--
+-- Indices de la tabla `plato_det`
+--
+ALTER TABLE `plato_det`
+  ADD PRIMARY KEY (`id_plato_det`);
+
+--
+-- Indices de la tabla `reserva`
+--
+ALTER TABLE `reserva`
+  ADD PRIMARY KEY (`id_reserva`);
+
+--
+-- Indices de la tabla `tipo_usuario`
+--
+ALTER TABLE `tipo_usuario`
+  ADD UNIQUE KEY `id_tipo_usuario` (`id_tipo_usuario`);
+
+--
+-- Indices de la tabla `ubicacion`
+--
+ALTER TABLE `ubicacion`
+  ADD PRIMARY KEY (`id_ubicacion`);
+
+--
+-- Indices de la tabla `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `usuario_det`
+--
+ALTER TABLE `usuario_det`
+  ADD PRIMARY KEY (`id_usuario_det`);
+
+--
+-- Indices de la tabla `usuario_grupo`
+--
+ALTER TABLE `usuario_grupo`
+  ADD PRIMARY KEY (`id_grupo`,`id_usuario`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,1,'admin','202cb962ac59075b964b07152d234b70','','anrto_94_5@hotmail.com');
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- AUTO_INCREMENT de la tabla `acciones`
+--
+ALTER TABLE `acciones`
+  MODIFY `id_accion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `auth`
+--
+ALTER TABLE `auth`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `comentario`
+--
+ALTER TABLE `comentario`
+  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `controlador`
+--
+ALTER TABLE `controlador`
+  MODIFY `id_controlador` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `cuenta_bancaria`
+--
+ALTER TABLE `cuenta_bancaria`
+  MODIFY `id_cuenta_bancaria` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `grupo`
+--
+ALTER TABLE `grupo`
+  MODIFY `id_grupo` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `mesa`
+--
+ALTER TABLE `mesa`
+  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `modalidad`
+--
+ALTER TABLE `modalidad`
+  MODIFY `id_modalidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `modulo`
+--
+ALTER TABLE `modulo`
+  MODIFY `id_modulo` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `perfil`
+--
+ALTER TABLE `perfil`
+  MODIFY `id_perfil` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `plato`
+--
+ALTER TABLE `plato`
+  MODIFY `id_plato` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `plato_det`
+--
+ALTER TABLE `plato_det`
+  MODIFY `id_plato_det` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `reserva`
+--
+ALTER TABLE `reserva`
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `tipo_usuario`
+--
+ALTER TABLE `tipo_usuario`
+  MODIFY `id_tipo_usuario` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `ubicacion`
+--
+ALTER TABLE `ubicacion`
+  MODIFY `id_ubicacion` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `usuario_det`
+--
+ALTER TABLE `usuario_det`
+  MODIFY `id_usuario_det` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2017-07-03 20:50:09
