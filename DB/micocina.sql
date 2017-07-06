@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 06-07-2017 a las 02:57:35
--- Versión del servidor: 10.1.21-MariaDB
--- Versión de PHP: 5.6.30
+-- Servidor: localhost
+-- Tiempo de generación: 06-07-2017 a las 16:52:12
+-- Versión del servidor: 5.7.18-0ubuntu0.16.04.1
+-- Versión de PHP: 5.6.30-12~ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -180,6 +180,14 @@ CREATE TABLE `perfil` (
   `foto` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `perfil`
+--
+
+INSERT INTO `perfil` (`id_perfil`, `id_usuario`, `slogan`, `foto`) VALUES
+(1, 57, 'La mejor comida de chile vamos vengan', ''),
+(2, 58, 'la mejor ok', '\r\n');
+
 -- --------------------------------------------------------
 
 --
@@ -290,7 +298,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `tlf1`, `nombres`, `apellidos`, `nacionalidad`, `sexo`, `fnacimiento`) VALUES
-(57, 'anrto_94_5@hotmail.com', 'sKhGJ_73CiM0lCyUBCXmwVWGz7xA-unf', '$2y$13$9PtrvtlrruETYRlPhpY7ZuPfWhbwApJzrnjNGyr3xn2H/od2VhNQa', 'jgwI1pMphGISusvSxBgW14Mcn2Mh0CHX_1499302159', 'anrto_94_5@hotmail.com', 10, 1499302159, 1499302159, NULL, 'Ray', 'Vasquez', NULL, 'male', NULL);
+(57, 'anrto_94_5@hotmail.com', 'sKhGJ_73CiM0lCyUBCXmwVWGz7xA-unf', '$2y$13$9PtrvtlrruETYRlPhpY7ZuPfWhbwApJzrnjNGyr3xn2H/od2VhNQa', 'jgwI1pMphGISusvSxBgW14Mcn2Mh0CHX_1499302159', 'anrto_94_5@hotmail.com', 10, 1499302159, 1499302159, NULL, 'Ray', 'Vasquez', NULL, 'male', NULL),
+(58, 'qwe', 'sKhGJ_73CiM0lCyUBCXmwVWGz7xA', '$2y$13$9PtrvtlrruETYRlPhpY7ZuPfWhbwApJzrnjNGyr3xn2H/od2VhNQa', 'jgwI1pMphGISusvSxBgW14Mcn2Mh0CHX_1499302159', 'anrto_94@es.com', 10, 1499302159, 1499302159, NULL, 'PEDRO', 'VELASQUEZ', NULL, 'male', NULL);
 
 -- --------------------------------------------------------
 
@@ -312,7 +321,7 @@ CREATE TABLE `usuario_det` (
 --
 
 INSERT INTO `usuario_det` (`id_usuario_det`, `id_tipo_usuario`, `id_ubicacion`, `id_usuario`, `fecha_create`, `comentario`) VALUES
-(6, 1, NULL, 57, '2017-07-05', NULL);
+(6, 2, NULL, 57, '2017-07-05', NULL);
 
 -- --------------------------------------------------------
 
@@ -516,7 +525,7 @@ ALTER TABLE `modulo`
 -- AUTO_INCREMENT de la tabla `perfil`
 --
 ALTER TABLE `perfil`
-  MODIFY `id_perfil` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_perfil` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `plato`
 --
@@ -546,7 +555,7 @@ ALTER TABLE `ubicacion`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT de la tabla `usuario_det`
 --
