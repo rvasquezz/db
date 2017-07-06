@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 04-07-2017 a las 16:56:50
--- Versión del servidor: 5.7.18-0ubuntu0.16.04.1
--- Versión de PHP: 5.6.30-12~ubuntu16.04.1+deb.sury.org+1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 06-07-2017 a las 02:57:35
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -54,7 +54,7 @@ CREATE TABLE `auth` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `source` varchar(255) NOT NULL,
-  `source_id` varchar(255) NOT NULL
+  `source_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `auth` (
 --
 
 INSERT INTO `auth` (`id`, `user_id`, `source`, `source_id`) VALUES
-(3, 3, 'facebook', '10209492862750836');
+(19, 57, 'facebook', '10209492862750836');
 
 -- --------------------------------------------------------
 
@@ -71,9 +71,11 @@ INSERT INTO `auth` (`id`, `user_id`, `source`, `source_id`) VALUES
 --
 
 CREATE TABLE `comentario` (
-  `id_comentario` int(11) NOT NULL,
+  `id_comentario` bigint(20) NOT NULL,
   `descripcion` varchar(250) NOT NULL,
-  `calificacion` varchar(10) NOT NULL
+  `calificacion` varchar(10) NOT NULL,
+  `id_usuario_receptor` int(11) NOT NULL,
+  `id_usuario_emisor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -127,7 +129,7 @@ INSERT INTO `grupo` (`id_grupo`, `nombre`, `descripcion`, `administrador`) VALUE
 --
 
 CREATE TABLE `mesa` (
-  `id_mesa` int(11) NOT NULL,
+  `id_mesa` bigint(20) NOT NULL,
   `cantidad` int(11) DEFAULT NULL,
   `puestos` int(11) DEFAULT NULL,
   `id_usuario` int(11) NOT NULL,
@@ -175,8 +177,7 @@ CREATE TABLE `perfil` (
   `id_perfil` bigint(20) UNSIGNED NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `slogan` varchar(250) NOT NULL,
-  `foto` varchar(200) NOT NULL,
-  `id_comentario` int(11) DEFAULT NULL
+  `foto` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -203,7 +204,7 @@ CREATE TABLE `plato` (
 --
 
 CREATE TABLE `plato_det` (
-  `id_plato_det` int(11) NOT NULL,
+  `id_plato_det` bigint(20) NOT NULL,
   `id_plato` int(11) NOT NULL,
   `disponibles` int(11) NOT NULL,
   `reservados` int(11) NOT NULL,
@@ -220,7 +221,7 @@ CREATE TABLE `plato_det` (
 --
 
 CREATE TABLE `reserva` (
-  `id_reserva` int(11) NOT NULL,
+  `id_reserva` bigint(20) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `id_modalidad` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
@@ -244,8 +245,8 @@ CREATE TABLE `tipo_usuario` (
 --
 
 INSERT INTO `tipo_usuario` (`id_tipo_usuario`, `nombre`) VALUES
-(1, 'COCINERO'),
-(2, 'CLIENTE'),
+(1, 'CLIENTE'),
+(2, 'COCINERO'),
 (3, 'MIXTO');
 
 -- --------------------------------------------------------
@@ -267,7 +268,7 @@ CREATE TABLE `ubicacion` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `username` varchar(255) NOT NULL,
   `auth_key` varchar(32) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
@@ -280,7 +281,6 @@ CREATE TABLE `user` (
   `nombres` varchar(60) NOT NULL,
   `apellidos` varchar(60) NOT NULL,
   `nacionalidad` varchar(1) DEFAULT NULL,
-  `id_usuario_det` int(11) DEFAULT NULL,
   `sexo` varchar(6) NOT NULL,
   `fnacimiento` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -289,8 +289,8 @@ CREATE TABLE `user` (
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `tlf1`, `nombres`, `apellidos`, `nacionalidad`, `id_usuario_det`, `sexo`, `fnacimiento`) VALUES
-(3, 'anrto_94_5@hotmail.com', 'n6uHoANKVq9JaAUp-bvtarfTP6Kv8OyF', '$2y$13$P0WoCrgP1sL0xTznCCyr7Ob6kYuj22OVBXEim3Gt9P6U/f/opQtfe', '6xWi6yfcTXI9QJvX5qQG8R_pjzg1Wvax_1499198848', 'anrto_94_5@hotmail.com', 10, 1499198848, 1499198848, NULL, 'Ray', 'Vasquez', NULL, NULL, 'male', NULL);
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `tlf1`, `nombres`, `apellidos`, `nacionalidad`, `sexo`, `fnacimiento`) VALUES
+(57, 'anrto_94_5@hotmail.com', 'sKhGJ_73CiM0lCyUBCXmwVWGz7xA-unf', '$2y$13$9PtrvtlrruETYRlPhpY7ZuPfWhbwApJzrnjNGyr3xn2H/od2VhNQa', 'jgwI1pMphGISusvSxBgW14Mcn2Mh0CHX_1499302159', 'anrto_94_5@hotmail.com', 10, 1499302159, 1499302159, NULL, 'Ray', 'Vasquez', NULL, 'male', NULL);
 
 -- --------------------------------------------------------
 
@@ -299,14 +299,20 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 --
 
 CREATE TABLE `usuario_det` (
-  `id_usuario_det` int(11) NOT NULL,
-  `id_tipo_usuario` int(11) NOT NULL,
-  `id_cuenta_bancaria` int(11) DEFAULT NULL,
-  `id_ubicacion` int(11) NOT NULL,
+  `id_usuario_det` bigint(20) NOT NULL,
+  `id_tipo_usuario` int(11) DEFAULT '1',
+  `id_ubicacion` int(11) DEFAULT NULL,
   `id_usuario` int(11) NOT NULL,
   `fecha_create` date NOT NULL,
   `comentario` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `usuario_det`
+--
+
+INSERT INTO `usuario_det` (`id_usuario_det`, `id_tipo_usuario`, `id_ubicacion`, `id_usuario`, `fecha_create`, `comentario`) VALUES
+(6, 1, NULL, 57, '2017-07-05', NULL);
 
 -- --------------------------------------------------------
 
@@ -369,7 +375,9 @@ ALTER TABLE `controlador`
 -- Indices de la tabla `cuenta_bancaria`
 --
 ALTER TABLE `cuenta_bancaria`
-  ADD UNIQUE KEY `id_cuenta_bancaria` (`id_cuenta_bancaria`);
+  ADD PRIMARY KEY (`id_cuenta_bancaria`),
+  ADD UNIQUE KEY `id_cuenta_bancaria` (`id_cuenta_bancaria`),
+  ADD UNIQUE KEY `cuenta` (`cuenta`);
 
 --
 -- Indices de la tabla `grupo`
@@ -403,6 +411,7 @@ ALTER TABLE `modulo`
 -- Indices de la tabla `perfil`
 --
 ALTER TABLE `perfil`
+  ADD PRIMARY KEY (`id_perfil`),
   ADD UNIQUE KEY `id_perfil` (`id_perfil`);
 
 --
@@ -427,6 +436,7 @@ ALTER TABLE `reserva`
 -- Indices de la tabla `tipo_usuario`
 --
 ALTER TABLE `tipo_usuario`
+  ADD PRIMARY KEY (`id_tipo_usuario`),
   ADD UNIQUE KEY `id_tipo_usuario` (`id_tipo_usuario`);
 
 --
@@ -466,12 +476,12 @@ ALTER TABLE `acciones`
 -- AUTO_INCREMENT de la tabla `auth`
 --
 ALTER TABLE `auth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT de la tabla `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comentario` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `controlador`
 --
@@ -491,7 +501,7 @@ ALTER TABLE `grupo`
 -- AUTO_INCREMENT de la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mesa` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `modalidad`
 --
@@ -516,12 +526,12 @@ ALTER TABLE `plato`
 -- AUTO_INCREMENT de la tabla `plato_det`
 --
 ALTER TABLE `plato_det`
-  MODIFY `id_plato_det` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_plato_det` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reserva` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `tipo_usuario`
 --
@@ -536,12 +546,12 @@ ALTER TABLE `ubicacion`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT de la tabla `usuario_det`
 --
 ALTER TABLE `usuario_det`
-  MODIFY `id_usuario_det` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario_det` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
