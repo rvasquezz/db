@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 06-07-2017 a las 16:52:12
--- Versión del servidor: 5.7.18-0ubuntu0.16.04.1
--- Versión de PHP: 5.6.30-12~ubuntu16.04.1+deb.sury.org+1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 09-07-2017 a las 21:44:59
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `micocina`
+-- Base de datos: `mycozina`
 --
 
 -- --------------------------------------------------------
@@ -200,7 +200,6 @@ CREATE TABLE `plato` (
   `descripcion` varchar(70) NOT NULL,
   `precio` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `id_plato_det` int(11) NOT NULL,
   `activo` varchar(4) NOT NULL,
   `fecha_create` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
